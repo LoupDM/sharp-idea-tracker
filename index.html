@@ -190,6 +190,127 @@
             margin: 10px 0;
         }
 
+        .idea-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .action-btn {
+            padding: 6px 12px;
+            background: #f0f0f0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: all 0.2s;
+        }
+
+        .action-btn:hover {
+            background: #e0e0e0;
+        }
+
+        .action-btn.edit {
+            background: #667eea;
+            color: white;
+        }
+
+        .action-btn.edit:hover {
+            background: #5568d3;
+        }
+
+        .action-btn.delete {
+            background: #f44336;
+            color: white;
+        }
+
+        .action-btn.delete:hover {
+            background: #d32f2f;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 50px auto;
+            padding: 30px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideIn 0.3s;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 1.5em;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .close-btn {
+            font-size: 28px;
+            font-weight: bold;
+            color: #aaa;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-btn:hover {
+            color: #333;
+        }
+
+        .modal-footer {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+
+        .btn-secondary {
+            background: #9E9E9E;
+        }
+
+        .btn-secondary:hover {
+            background: #757575;
+            box-shadow: 0 5px 15px rgba(158, 158, 158, 0.4);
+        }
+
         .status-badge {
             padding: 3px 8px;
             border-radius: 4px;
@@ -297,13 +418,8 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email">
-                    </div>
-
-                    <div class="form-group">
                         <label for="category">Category *</label>
-                        <select id="category" name="category" required>
+                        <select id="category" name="category" required
                             <option value="">Select a category</option>
                             <option value="Feature">Feature</option>
                             <option value="Bug Fix">Bug Fix</option>
@@ -353,6 +469,71 @@
         </div>
     </div>
 
+    <!-- Edit Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Edit Idea</h2>
+                <button class="close-btn" onclick="closeEditModal()">&times;</button>
+            </div>
+            <form id="editForm">
+                <input type="hidden" id="editId">
+                
+                <div class="form-group">
+                    <label for="editTitle">Project Title *</label>
+                    <input type="text" id="editTitle" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="editSubmitter">Submitter *</label>
+                    <input type="text" id="editSubmitter" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="editCategory">Category *</label>
+                    <select id="editCategory" required>
+                        <option value="Feature">Feature</option>
+                        <option value="Bug Fix">Bug Fix</option>
+                        <option value="Enhancement">Enhancement</option>
+                        <option value="Research">Research</option>
+                        <option value="Documentation">Documentation</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="editPriority">Priority</label>
+                    <select id="editPriority">
+                        <option value="Low">Low</option>
+                        <option value="Medium">Medium</option>
+                        <option value="High">High</option>
+                        <option value="Critical">Critical</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="editStatus">Status</label>
+                    <select id="editStatus">
+                        <option value="New">New</option>
+                        <option value="Under Review">Under Review</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Completed">Completed</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="editDescription">Description *</label>
+                    <textarea id="editDescription" required></textarea>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="button btn-secondary" onclick="closeEditModal()">Cancel</button>
+                    <button type="submit" class="button">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
@@ -360,12 +541,12 @@
     <script>
         // Firebase configuration - REPLACE WITH YOUR CONFIG
         const firebaseConfig = {
-            apiKey: "AIzaSyBn3nVo-ARPpVt3AZCjOcrkULyZiOhz2xQ",
-            authDomain: "sharp-idea-tracker-database.firebaseapp.com",
-            projectId: "sharp-idea-tracker-database",
-            storageBucket: "sharp-idea-tracker-database.firebasestorage.app",
-            messagingSenderId: "567091005163",
-            appId: "1:567091005163:web:8a2e6e512479a9549160ae"
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
         };
 
         // Initialize Firebase
@@ -446,8 +627,80 @@
                         <span>📅 ${formatDate(idea.createdAt)}</span>
                         <span>🎯 ${idea.priority} Priority</span>
                     </div>
+                    <div class="idea-actions">
+                        <button class="action-btn edit" onclick="editIdea('${idea.id}')">✏️ Edit</button>
+                        <button class="action-btn delete" onclick="deleteIdea('${idea.id}')">🗑️ Delete</button>
+                    </div>
                 </div>
             `).join('');
+        }
+
+        // Open edit modal
+        function editIdea(ideaId) {
+            const idea = allIdeas.find(i => i.id === ideaId);
+            if (!idea) return;
+
+            document.getElementById('editId').value = idea.id;
+            document.getElementById('editTitle').value = idea.title;
+            document.getElementById('editSubmitter').value = idea.submitter;
+            document.getElementById('editCategory').value = idea.category;
+            document.getElementById('editPriority').value = idea.priority;
+            document.getElementById('editStatus').value = idea.status;
+            document.getElementById('editDescription').value = idea.description;
+
+            document.getElementById('editModal').style.display = 'block';
+        }
+
+        // Close edit modal
+        function closeEditModal() {
+            document.getElementById('editModal').style.display = 'none';
+            document.getElementById('editForm').reset();
+        }
+
+        // Delete idea
+        async function deleteIdea(ideaId) {
+            if (!confirm('Are you sure you want to delete this idea?')) return;
+
+            try {
+                await db.collection('ideas').doc(ideaId).delete();
+                showSuccess('Idea deleted successfully!');
+            } catch (error) {
+                console.error('Error deleting idea:', error);
+                showError('Failed to delete idea. Please try again.');
+            }
+        }
+
+        // Handle edit form submission
+        document.getElementById('editForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const ideaId = document.getElementById('editId').value;
+            const updatedIdea = {
+                title: document.getElementById('editTitle').value,
+                submitter: document.getElementById('editSubmitter').value,
+                category: document.getElementById('editCategory').value,
+                priority: document.getElementById('editPriority').value,
+                status: document.getElementById('editStatus').value,
+                description: document.getElementById('editDescription').value,
+                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+            };
+
+            try {
+                await db.collection('ideas').doc(ideaId).update(updatedIdea);
+                showSuccess('Idea updated successfully!');
+                closeEditModal();
+            } catch (error) {
+                console.error('Error updating idea:', error);
+                showError('Failed to update idea. Please try again.');
+            }
+        });
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('editModal');
+            if (event.target === modal) {
+                closeEditModal();
+            }
         }
 
         // Filter ideas
@@ -483,7 +736,6 @@
             const idea = {
                 title: formData.get('title'),
                 submitter: formData.get('submitter'),
-                email: formData.get('email') || '',
                 category: formData.get('category'),
                 priority: formData.get('priority'),
                 description: formData.get('description'),
