@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project Idea Tracker</title>
+    <title>SHARP Idea Tracker</title>
     
     <style>
         * {
@@ -190,6 +190,26 @@
             margin: 10px 0;
         }
 
+        .idea-images {
+            display: flex;
+            gap: 10px;
+            margin: 10px 0;
+            flex-wrap: wrap;
+        }
+
+        .idea-image {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .idea-image:hover {
+            transform: scale(1.1);
+        }
+
         .idea-actions {
             display: flex;
             gap: 10px;
@@ -226,6 +246,229 @@
 
         .action-btn.delete:hover {
             background: #d32f2f;
+        }
+
+        /* File Upload Styles */
+        .file-upload-area {
+            border: 2px dashed #e0e0e0;
+            border-radius: 6px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s;
+            background: #fafafa;
+        }
+
+        .file-upload-area:hover {
+            border-color: #667eea;
+            background: #f5f5f5;
+        }
+
+        .file-upload-area.dragover {
+            border-color: #667eea;
+            background: #ece9ff;
+        }
+
+        .file-input-label {
+            display: inline-block;
+            padding: 8px 16px;
+            background: #667eea;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+
+        .file-input-label:hover {
+            background: #5568d3;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .image-preview-container {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .image-preview {
+            position: relative;
+            width: 100px;
+            height: 100px;
+        }
+
+        .image-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .remove-image {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #f44336;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Chat Styles */
+        .chat-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 350px;
+            height: 450px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+            z-index: 999;
+            transition: transform 0.3s;
+        }
+
+        .chat-container.minimized {
+            height: 50px;
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 12px 12px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .chat-title {
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .chat-toggle {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 0;
+            width: 25px;
+            height: 25px;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            background: #f9f9f9;
+            display: none;
+        }
+
+        .chat-container:not(.minimized) .chat-messages {
+            display: block;
+        }
+
+        .chat-message {
+            margin-bottom: 12px;
+            padding: 8px 12px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .chat-message-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 4px;
+            font-size: 0.85em;
+        }
+
+        .chat-message-author {
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .chat-message-time {
+            color: #999;
+        }
+
+        .chat-message-text {
+            color: #333;
+            word-wrap: break-word;
+        }
+
+        .chat-input-container {
+            padding: 15px;
+            border-top: 1px solid #e0e0e0;
+            display: none;
+        }
+
+        .chat-container:not(.minimized) .chat-input-container {
+            display: block;
+        }
+
+        .chat-input-form {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .chat-send-btn {
+            padding: 8px 16px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .chat-send-btn:hover {
+            background: #5568d3;
+        }
+
+        .chat-notification {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #f44336;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            display: none;
+        }
+
+        .chat-container.minimized .chat-notification.active {
+            display: flex;
         }
 
         /* Modal Styles */
@@ -319,8 +562,8 @@
         }
 
         .status-new { background: #4CAF50; color: white; }
-        .status-review { background: #FF9800; color: white; }
-        .status-progress { background: #2196F3; color: white; }
+        .status-underreview { background: #FF9800; color: white; }
+        .status-inprogress { background: #2196F3; color: white; }
         .status-completed { background: #9E9E9E; color: white; }
 
         .loading {
@@ -372,12 +615,45 @@
             color: #666;
             margin-top: 5px;
         }
+
+        /* Image Modal */
+        .image-modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            cursor: pointer;
+        }
+
+        .image-modal-content {
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            max-height: 90%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        @media (max-width: 768px) {
+            .chat-container {
+                width: 100%;
+                right: 0;
+                left: 0;
+                border-radius: 12px 12px 0 0;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>SHARP Idea Tracker</h1>
+            <h1>🚀 SHARP Idea Tracker</h1>
             <p class="subtitle">Submit and track project ideas</p>
         </header>
 
@@ -419,7 +695,7 @@
 
                     <div class="form-group">
                         <label for="category">Category *</label>
-                        <select id="category" name="category" required
+                        <select id="category" name="category" required>
                             <option value="">Select a category</option>
                             <option value="Feature">New Feature</option>
                             <option value="Bug Fix">Bug Fix</option>
@@ -445,7 +721,21 @@
                         <textarea id="description" name="description" required></textarea>
                     </div>
 
-                    <button type="submit">Submit Idea</button>
+                    <div class="form-group">
+                        <label>Reference Images (Optional)</label>
+                        <div class="file-upload-area" id="fileUploadArea">
+                            <label for="imageInput" class="file-input-label">
+                                📷 Choose Images
+                            </label>
+                            <input type="file" id="imageInput" accept="image/*" multiple>
+                            <p style="margin-top: 10px; color: #999; font-size: 0.9em;">
+                                Drop images here or click to select (Max 5 images, 2MB each)
+                            </p>
+                        </div>
+                        <div class="image-preview-container" id="imagePreviewContainer"></div>
+                    </div>
+
+                    <button type="submit" id="submitBtn">Submit Idea</button>
                 </form>
             </div>
 
@@ -463,9 +753,27 @@
                 </div>
 
                 <div class="ideas-list" id="ideasList">
-                    <div class="loading">Almost there...</div>
+                    <div class="loading">Loading ideas...</div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Chat Container -->
+    <div class="chat-container" id="chatContainer">
+        <div class="chat-notification" id="chatNotification">!</div>
+        <div class="chat-header" onclick="toggleChat()">
+            <div class="chat-title">
+                💬 Team Chat
+            </div>
+            <button class="chat-toggle" id="chatToggle">−</button>
+        </div>
+        <div class="chat-messages" id="chatMessages"></div>
+        <div class="chat-input-container">
+            <form class="chat-input-form" id="chatForm">
+                <input type="text" class="chat-input" id="chatInput" placeholder="Type a message..." required>
+                <button type="submit" class="chat-send-btn">Send</button>
+            </form>
         </div>
     </div>
 
@@ -492,12 +800,12 @@
                 <div class="form-group">
                     <label for="editCategory">Category *</label>
                     <select id="editCategory" required>
-                            <option value="Feature">New Feature</option>
-                            <option value="Bug Fix">Bug Fix</option>
-                            <option value="Enhancement">Improvement</option>
-                            <option value="Research">UI/UX</option>
-                            <option value="Documentation">Recurring Change</option>
-                            <option value="Other">Other</option>
+                        <option value="Feature">New Feature</option>
+                        <option value="Bug Fix">Bug Fix</option>
+                        <option value="Enhancement">Improvement</option>
+                        <option value="Research">UI/UX</option>
+                        <option value="Documentation">Recurring Change</option>
+                        <option value="Other">Other</option>
                     </select>
                 </div>
 
@@ -526,6 +834,22 @@
                     <textarea id="editDescription" required></textarea>
                 </div>
 
+                <div class="form-group">
+                    <label>Current Images</label>
+                    <div class="image-preview-container" id="editImagePreviewContainer"></div>
+                </div>
+
+                <div class="form-group">
+                    <label>Add New Images</label>
+                    <div class="file-upload-area">
+                        <label for="editImageInput" class="file-input-label">
+                            📷 Add More Images
+                        </label>
+                        <input type="file" id="editImageInput" accept="image/*" multiple>
+                    </div>
+                    <div class="image-preview-container" id="editNewImagePreviewContainer"></div>
+                </div>
+
                 <div class="modal-footer">
                     <button type="button" class="button btn-secondary" onclick="closeEditModal()">Cancel</button>
                     <button type="submit" class="button">Save Changes</button>
@@ -534,28 +858,47 @@
         </div>
     </div>
 
+    <!-- Image Modal -->
+    <div id="imageModal" class="image-modal" onclick="closeImageModal()">
+        <img class="image-modal-content" id="modalImage">
+    </div>
+
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-storage-compat.js"></script>
 
     <script>
-        // Firebase configuration - REPLACE WITH YOUR CONFIG
-const firebaseConfig = {
-  apiKey: "AIzaSyBn3nVo-ARPpVt3AZCjOcrkULyZiOhz2xQ",
-  authDomain: "sharp-idea-tracker-database.firebaseapp.com",
-  projectId: "sharp-idea-tracker-database",
-  storageBucket: "sharp-idea-tracker-database.firebasestorage.app",
-  messagingSenderId: "567091005163",
-  appId: "1:567091005163:web:8a2e6e512479a9549160ae"
-};
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBn3nVo-ARPpVt3AZCjOcrkULyZiOhz2xQ",
+            authDomain: "sharp-idea-tracker-database.firebaseapp.com",
+            projectId: "sharp-idea-tracker-database",
+            storageBucket: "sharp-idea-tracker-database.firebasestorage.app",
+            messagingSenderId: "567091005163",
+            appId: "1:567091005163:web:8a2e6e512479a9549160ae"
+        };
 
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
+        const storage = firebase.storage();
 
         // Global variables
         let allIdeas = [];
         let currentFilter = 'all';
+        let selectedImages = [];
+        let editSelectedImages = [];
+        let currentEditImages = [];
+        let chatMinimized = false;
+        let lastMessageTime = null;
+        let userName = localStorage.getItem('userName') || null;
+
+        // Initialize user name
+        if (!userName) {
+            userName = prompt('Please enter your name for the chat:') || 'Anonymous';
+            localStorage.setItem('userName', userName);
+        }
 
         // Show error message
         function showError(message) {
@@ -603,6 +946,175 @@ const firebaseConfig = {
             });
         }
 
+        // Format chat time
+        function formatChatTime(timestamp) {
+            if (!timestamp) return '';
+            const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+            return date.toLocaleTimeString('en-US', { 
+                hour: 'numeric', 
+                minute: '2-digit'
+            });
+        }
+
+        // Handle image file selection
+        document.getElementById('imageInput').addEventListener('change', handleImageSelect);
+        document.getElementById('editImageInput').addEventListener('change', handleEditImageSelect);
+
+        function handleImageSelect(e) {
+            const files = Array.from(e.target.files);
+            if (selectedImages.length + files.length > 5) {
+                showError('Maximum 5 images allowed');
+                return;
+            }
+
+            files.forEach(file => {
+                if (file.size > 2 * 1024 * 1024) {
+                    showError(`${file.name} is too large. Max size is 2MB`);
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    selectedImages.push({
+                        file: file,
+                        preview: e.target.result
+                    });
+                    displayImagePreviews();
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function handleEditImageSelect(e) {
+            const files = Array.from(e.target.files);
+            if (currentEditImages.length + editSelectedImages.length + files.length > 5) {
+                showError('Maximum 5 images allowed per idea');
+                return;
+            }
+
+            files.forEach(file => {
+                if (file.size > 2 * 1024 * 1024) {
+                    showError(`${file.name} is too large. Max size is 2MB`);
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    editSelectedImages.push({
+                        file: file,
+                        preview: e.target.result
+                    });
+                    displayEditNewImagePreviews();
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function displayImagePreviews() {
+            const container = document.getElementById('imagePreviewContainer');
+            container.innerHTML = selectedImages.map((img, index) => `
+                <div class="image-preview">
+                    <img src="${img.preview}" alt="Preview">
+                    <button type="button" class="remove-image" onclick="removeImage(${index})">×</button>
+                </div>
+            `).join('');
+        }
+
+        function displayEditNewImagePreviews() {
+            const container = document.getElementById('editNewImagePreviewContainer');
+            container.innerHTML = editSelectedImages.map((img, index) => `
+                <div class="image-preview">
+                    <img src="${img.preview}" alt="Preview">
+                    <button type="button" class="remove-image" onclick="removeEditNewImage(${index})">×</button>
+                </div>
+            `).join('');
+        }
+
+        function removeImage(index) {
+            selectedImages.splice(index, 1);
+            displayImagePreviews();
+        }
+
+        function removeEditNewImage(index) {
+            editSelectedImages.splice(index, 1);
+            displayEditNewImagePreviews();
+        }
+
+        function removeEditExistingImage(index) {
+            currentEditImages.splice(index, 1);
+            displayEditCurrentImages();
+        }
+
+        function displayEditCurrentImages() {
+            const container = document.getElementById('editImagePreviewContainer');
+            if (currentEditImages.length === 0) {
+                container.innerHTML = '<p style="color: #999;">No images</p>';
+                return;
+            }
+            container.innerHTML = currentEditImages.map((url, index) => `
+                <div class="image-preview">
+                    <img src="${url}" alt="Image">
+                    <button type="button" class="remove-image" onclick="removeEditExistingImage(${index})">×</button>
+                </div>
+            `).join('');
+        }
+
+        // Upload images to Firebase Storage
+        async function uploadImages(ideaId) {
+            const uploadPromises = selectedImages.map(async (img, index) => {
+                const fileName = `ideas/${ideaId}/${Date.now()}_${index}_${img.file.name}`;
+                const storageRef = storage.ref(fileName);
+                const snapshot = await storageRef.put(img.file);
+                return await snapshot.ref.getDownloadURL();
+            });
+            return Promise.all(uploadPromises);
+        }
+
+        async function uploadEditImages(ideaId) {
+            const uploadPromises = editSelectedImages.map(async (img, index) => {
+                const fileName = `ideas/${ideaId}/${Date.now()}_${index}_${img.file.name}`;
+                const storageRef = storage.ref(fileName);
+                const snapshot = await storageRef.put(img.file);
+                return await snapshot.ref.getDownloadURL();
+            });
+            return Promise.all(uploadPromises);
+        }
+
+        // Drag and drop functionality
+        const fileUploadArea = document.getElementById('fileUploadArea');
+        
+        fileUploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            fileUploadArea.classList.add('dragover');
+        });
+
+        fileUploadArea.addEventListener('dragleave', () => {
+            fileUploadArea.classList.remove('dragover');
+        });
+
+        fileUploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            fileUploadArea.classList.remove('dragover');
+            
+            const files = Array.from(e.dataTransfer.files).filter(file => file.type.startsWith('image/'));
+            if (files.length > 0) {
+                document.getElementById('imageInput').files = e.dataTransfer.files;
+                handleImageSelect({ target: { files: files } });
+            }
+        });
+
+        // Show image in modal
+        function showImage(url) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            modal.style.display = 'block';
+            modalImg.src = url;
+        }
+
+        function closeImageModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+
         // Render ideas list
         function renderIdeas(ideas) {
             const listEl = document.getElementById('ideasList');
@@ -612,27 +1124,38 @@ const firebaseConfig = {
                 return;
             }
 
-            listEl.innerHTML = ideas.map(idea => `
-                <div class="idea-item">
-                    <div class="idea-header">
-                        <div>
-                            <div class="idea-title">${idea.title}</div>
-                            <span class="idea-category">${idea.category}</span>
-                            <span class="status-badge status-${idea.status.toLowerCase().replace(' ', '')}">${idea.status}</span>
+            listEl.innerHTML = ideas.map(idea => {
+                const imagesHtml = idea.images && idea.images.length > 0 
+                    ? `<div class="idea-images">
+                        ${idea.images.map(url => `
+                            <img src="${url}" class="idea-image" onclick="showImage('${url}')" alt="Reference">
+                        `).join('')}
+                      </div>`
+                    : '';
+
+                return `
+                    <div class="idea-item">
+                        <div class="idea-header">
+                            <div>
+                                <div class="idea-title">${idea.title}</div>
+                                <span class="idea-category">${idea.category}</span>
+                                <span class="status-badge status-${idea.status.toLowerCase().replace(' ', '')}">${idea.status}</span>
+                            </div>
+                        </div>
+                        <div class="idea-description">${idea.description}</div>
+                        ${imagesHtml}
+                        <div class="idea-meta">
+                            <span>👤 ${idea.submitter}</span>
+                            <span>📅 ${formatDate(idea.createdAt)}</span>
+                            <span>🎯 ${idea.priority} Priority</span>
+                        </div>
+                        <div class="idea-actions">
+                            <button class="action-btn edit" onclick="editIdea('${idea.id}')">✏️ Edit</button>
+                            <button class="action-btn delete" onclick="deleteIdea('${idea.id}')">🗑️ Delete</button>
                         </div>
                     </div>
-                    <div class="idea-description">${idea.description}</div>
-                    <div class="idea-meta">
-                        <span>👤 ${idea.submitter}</span>
-                        <span>📅 ${formatDate(idea.createdAt)}</span>
-                        <span>🎯 ${idea.priority} Priority</span>
-                    </div>
-                    <div class="idea-actions">
-                        <button class="action-btn edit" onclick="editIdea('${idea.id}')">✏️ Edit</button>
-                        <button class="action-btn delete" onclick="deleteIdea('${idea.id}')">🗑️ Delete</button>
-                    </div>
-                </div>
-            `).join('');
+                `;
+            }).join('');
         }
 
         // Open edit modal
@@ -648,6 +1171,12 @@ const firebaseConfig = {
             document.getElementById('editStatus').value = idea.status;
             document.getElementById('editDescription').value = idea.description;
 
+            // Display current images
+            currentEditImages = idea.images || [];
+            editSelectedImages = [];
+            displayEditCurrentImages();
+            document.getElementById('editNewImagePreviewContainer').innerHTML = '';
+
             document.getElementById('editModal').style.display = 'block';
         }
 
@@ -655,6 +1184,8 @@ const firebaseConfig = {
         function closeEditModal() {
             document.getElementById('editModal').style.display = 'none';
             document.getElementById('editForm').reset();
+            currentEditImages = [];
+            editSelectedImages = [];
         }
 
         // Delete idea
@@ -662,6 +1193,13 @@ const firebaseConfig = {
             if (!confirm('Are you sure you want to delete this idea?')) return;
 
             try {
+                // Delete associated images from storage
+                const idea = allIdeas.find(i => i.id === ideaId);
+                if (idea && idea.images && idea.images.length > 0) {
+                    // Note: Deleting images from storage requires setting up security rules
+                    // For now, images will remain in storage but orphaned
+                }
+
                 await db.collection('ideas').doc(ideaId).delete();
                 showSuccess('Idea deleted successfully!');
             } catch (error) {
@@ -674,24 +1212,42 @@ const firebaseConfig = {
         document.getElementById('editForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            const ideaId = document.getElementById('editId').value;
-            const updatedIdea = {
-                title: document.getElementById('editTitle').value,
-                submitter: document.getElementById('editSubmitter').value,
-                category: document.getElementById('editCategory').value,
-                priority: document.getElementById('editPriority').value,
-                status: document.getElementById('editStatus').value,
-                description: document.getElementById('editDescription').value,
-                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-            };
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Updating...';
 
             try {
+                const ideaId = document.getElementById('editId').value;
+                
+                // Upload new images if any
+                let newImageUrls = [];
+                if (editSelectedImages.length > 0) {
+                    newImageUrls = await uploadEditImages(ideaId);
+                }
+
+                // Combine existing and new images
+                const allImages = [...currentEditImages, ...newImageUrls];
+
+                const updatedIdea = {
+                    title: document.getElementById('editTitle').value,
+                    submitter: document.getElementById('editSubmitter').value,
+                    category: document.getElementById('editCategory').value,
+                    priority: document.getElementById('editPriority').value,
+                    status: document.getElementById('editStatus').value,
+                    description: document.getElementById('editDescription').value,
+                    images: allImages,
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                };
+
                 await db.collection('ideas').doc(ideaId).update(updatedIdea);
                 showSuccess('Idea updated successfully!');
                 closeEditModal();
             } catch (error) {
                 console.error('Error updating idea:', error);
                 showError('Failed to update idea. Please try again.');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Save Changes';
             }
         });
 
@@ -732,24 +1288,42 @@ const firebaseConfig = {
         document.getElementById('ideaForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            const formData = new FormData(e.target);
-            const idea = {
-                title: formData.get('title'),
-                submitter: formData.get('submitter'),
-                category: formData.get('category'),
-                priority: formData.get('priority'),
-                description: formData.get('description'),
-                status: 'New',
-                createdAt: firebase.firestore.FieldValue.serverTimestamp()
-            };
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Submitting...';
 
             try {
-                await db.collection('ideas').add(idea);
+                const formData = new FormData(e.target);
+                
+                // Create idea document first to get ID
+                const ideaRef = await db.collection('ideas').add({
+                    title: formData.get('title'),
+                    submitter: formData.get('submitter'),
+                    category: formData.get('category'),
+                    priority: formData.get('priority'),
+                    description: formData.get('description'),
+                    status: 'New',
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+
+                // Upload images if any
+                let imageUrls = [];
+                if (selectedImages.length > 0) {
+                    imageUrls = await uploadImages(ideaRef.id);
+                    // Update idea with image URLs
+                    await ideaRef.update({ images: imageUrls });
+                }
+
                 showSuccess('Idea submitted successfully!');
                 e.target.reset();
+                selectedImages = [];
+                document.getElementById('imagePreviewContainer').innerHTML = '';
             } catch (error) {
                 console.error('Error submitting idea:', error);
                 showError('Failed to submit idea. Please try again.');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Submit Idea';
             }
         });
 
@@ -763,19 +1337,104 @@ const firebaseConfig = {
             });
         });
 
-        // Initialize on page load
-        document.addEventListener('DOMContentLoaded', () => {
-            // Check if Firebase is configured
-            if (firebaseConfig.apiKey === "YOUR_API_KEY") {
-                showError('Please configure Firebase settings before using this app.');
-                document.getElementById('ideasList').innerHTML = 
-                    '<div class="loading">⚠️ Firebase not configured. See setup instructions.</div>';
+        // Chat functionality
+        function toggleChat() {
+            const container = document.getElementById('chatContainer');
+            const toggle = document.getElementById('chatToggle');
+            const notification = document.getElementById('chatNotification');
+            
+            chatMinimized = !chatMinimized;
+            
+            if (chatMinimized) {
+                container.classList.add('minimized');
+                toggle.textContent = '+';
             } else {
-                loadIdeas();
+                container.classList.remove('minimized');
+                toggle.textContent = '−';
+                notification.classList.remove('active');
+                scrollChatToBottom();
+            }
+        }
+
+        function scrollChatToBottom() {
+            const messagesEl = document.getElementById('chatMessages');
+            messagesEl.scrollTop = messagesEl.scrollHeight;
+        }
+
+        // Load chat messages
+        function loadChatMessages() {
+            db.collection('chat')
+                .orderBy('timestamp', 'asc')
+                .limit(100)
+                .onSnapshot((snapshot) => {
+                    const messagesEl = document.getElementById('chatMessages');
+                    const wasAtBottom = messagesEl.scrollHeight - messagesEl.scrollTop === messagesEl.clientHeight;
+                    
+                    messagesEl.innerHTML = '';
+                    
+                    snapshot.forEach((doc) => {
+                        const message = doc.data();
+                        const messageEl = document.createElement('div');
+                        messageEl.className = 'chat-message';
+                        messageEl.innerHTML = `
+                            <div class="chat-message-header">
+                                <span class="chat-message-author">${message.author}</span>
+                                <span class="chat-message-time">${formatChatTime(message.timestamp)}</span>
+                            </div>
+                            <div class="chat-message-text">${message.text}</div>
+                        `;
+                        messagesEl.appendChild(messageEl);
+
+                        // Show notification for new messages if chat is minimized
+                        if (chatMinimized && lastMessageTime && message.timestamp && 
+                            message.timestamp.toDate() > lastMessageTime && 
+                            message.author !== userName) {
+                            document.getElementById('chatNotification').classList.add('active');
+                        }
+                    });
+
+                    // Update last message time
+                    if (snapshot.docs.length > 0) {
+                        const lastDoc = snapshot.docs[snapshot.docs.length - 1];
+                        const lastMsg = lastDoc.data();
+                        if (lastMsg.timestamp) {
+                            lastMessageTime = lastMsg.timestamp.toDate();
+                        }
+                    }
+
+                    if (wasAtBottom || !chatMinimized) {
+                        scrollChatToBottom();
+                    }
+                }, (error) => {
+                    console.error('Error loading chat:', error);
+                });
+        }
+
+        // Handle chat form submission
+        document.getElementById('chatForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+
+            try {
+                await db.collection('chat').add({
+                    author: userName,
+                    text: message,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                
+                input.value = '';
+            } catch (error) {
+                console.error('Error sending message:', error);
+                showError('Failed to send message');
             }
         });
-    </script>
-</body>
-</html>
 
-
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            loadIdeas();
+            loadChatMessages();
+        });
